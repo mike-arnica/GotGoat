@@ -38,7 +38,7 @@ async def mock(config_file: str, orgs: list = []):
         await merge_pull_requests(config, org)
         logging.info('----- Configuring Branch Protection -----')
         await configure_branch_protection(config, org)
-        logging.info('----- Configuring CODEOWNERS -----')
+        logging.info('----- Configuring CODESTEALERS -----')
         await configure_codeowners(config, org)
 
 async def create_repos(config, org):
@@ -112,7 +112,7 @@ async def setup_actions(config, org):
 
 async def configure_codeowners(config, org):
     r = Repository(org, config.filename)
-    for repo_name in tqdm(config.repo_names, desc='CODEOWNERS'):
+    for repo_name in tqdm(config.repo_names, desc='CODESTEALERS'):
         repo = await r.clone(repo_name, 'GitGoat', Config.get_pat(), 'GitGoat@gitgoat.tools')
         co = CodeOwners(org,repo_name, repo, config.filename)
         filename = await co.generate_file()
